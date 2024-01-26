@@ -1,5 +1,6 @@
 const noteModel = require("../models/noteModel");
 
+//create the notes
 const createNoteController = async (req, resp) => {
   const { title, description } = req.body;
   try {
@@ -10,6 +11,20 @@ const createNoteController = async (req, resp) => {
     }
     const existing = await noteModel.create({ title, description });
     resp.status(200).json({ message: "Note created successfully" });
-  } catch (error) {}
+  } catch (error) {
+    resp.status(500).json({ message: "Error creating note" });
+  }
 };
-module.exports = { createNoteController };
+
+//get the notes
+
+const getallNotes = async (req, resp) => {
+  try {
+    const note = await noteModel.find({});
+    resp.status(200).json(note);
+  } catch (error) {
+    resp.status(500).json({ message: "Error creating note" });
+  }
+};
+
+module.exports = { createNoteController, getallNotes };
